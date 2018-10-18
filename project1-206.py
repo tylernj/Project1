@@ -52,7 +52,22 @@ def classSizes(data):
 # descending order
 # [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
 
-	pass
+		class_size = {}
+
+		for dictionary in data:
+			if dictionary["Class"] in class_size:
+				class_size[dictionary["Class"]] += 1
+			else:
+				class_size[dictionary["Class"]] = 1
+
+
+
+		list_of_tuples = []
+		for item in class_size:
+			list_of_tuples.append((item, class_size[item]))
+
+		return sorted(list_of_tuples, key = lambda x: x[1], reverse = True)
+
 
 
 def findMonth(a):
