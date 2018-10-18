@@ -10,14 +10,39 @@ def getData(file):
 #Ouput: return a list of dictionary objects where
 #the keys are from the first row in the data. and the values are each of the other rows
 
-	pass
+	new_file = open(file, 'r')
+	new_list = []
+	lines = new_file.readlines()
+	first_row = lines[0]
+	first_row = first_row.rstrip()
+	first_row = first_row.split(",")
+
+	for line in lines[1:]:
+		count = 0
+		new_dict = {}
+		split_line = line.split(",")
+		for item in split_line:
+			if first_row[count] not in new_dict:
+				new_dict[first_row[count]] = item
+			count += 1
+		new_list.append(new_dict)
+	new_file.close()
+
+
+	return new_list
+
 
 def mySort(data,col):
 # Sort based on key/column
 #Input: list of dictionaries and col (key) to sort on
 #Output: Return the first item in the sorted list as a string of just: firstName lastName
 
-	pass
+	sorted_data = sorted(data, key = lambda x: x[col])
+
+	first_name = sorted_data[0]["First"]
+	last_name = sorted_data[0]["Last"]
+
+	return first_name + " " + last_name
 
 
 def classSizes(data):
