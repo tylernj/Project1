@@ -1,7 +1,8 @@
 import os
 import filecmp
-from dateutil.relativedelta import *
+#from dateutil.relativedelta import *
 from datetime import date
+import csv
 
 
 def getData(file):
@@ -74,8 +75,30 @@ def findMonth(a):
 # Find the most common birth month form this data
 # Input: list of dictionaries
 # Output: Return the month (1-12) that had the most births in the data
+	dict_of_months = {}
 
-	pass
+	for dictionary in a:
+		birth_day = dictionary["DOB"]
+		if birth_day[1] == "/":
+			birth_month = birth_day[0]
+			if birth_month in dict_of_months:
+				dict_of_months[birth_month] += 1
+			else:
+				dict_of_months[birth_month] = 1
+		else:
+			birth_month = birth_day[:2]
+			if birth_month in dict_of_months:
+				dict_of_months[birth_month] += 1
+			else:
+				dict_of_months[birth_month] = 1
+
+	month_list = list(dict_of_months.keys())
+	sorted_values = sorted(month_list, key = lambda x: dict_of_months[x], reverse = True)
+
+	most_month = sorted_values[0]
+	return int(most_month)
+
+
 
 def mySortPrint(a,col,fileName):
 #Similar to mySort, but instead of returning single
@@ -84,7 +107,31 @@ def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, col (key) to sort by and output file name
 #Output: No return value, but the file is written
 
-	pass
+	sorted_data = sorted(a, key = lambda x: x[col])
+
+
+
+
+	open_file = open(fileName, "w")
+
+
+
+	for item in sorted_data:
+		first_name = item["First"]
+		last_name = item["Last"]
+		email = item["Email"]
+		row = first_name + "," + last_name + "," + email + "\n"
+		open_file.write(row)
+
+
+
+
+
+
+	open_file.close()
+
+
+
 
 def findAge(a):
 # def findAge(a):
@@ -93,7 +140,22 @@ def findAge(a):
 # integer.  You will need to work with the DOB and the current date to find the current
 # age in years.
 
-	pass
+	ages_list = []
+	b_days = []
+
+	for d in a:
+		month = int(d["DOB"].split('/')[0])
+		day = int(d["DOB"].split("/")[1])
+		if month > 10 and day > 23:
+			ages_list.append(2017 - int(d['DOB'].split('/')[-1].strip('\n')))
+		else:
+			ages_list.append(2018 - int(d['DOB'].split('/')[-1].strip('\n')))
+
+	return round(sum(ages_list)/len(ages_list))
+
+
+
+
 
 
 ################################################################
