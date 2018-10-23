@@ -1,6 +1,6 @@
 import os
 import filecmp
-#from dateutil.relativedelta import *
+from dateutil.relativedelta import *
 from datetime import date
 import csv
 
@@ -141,7 +141,6 @@ def findAge(a):
 # age in years.
 
 	ages_list = []
-	b_days = []
 
 	for d in a:
 		month = int(d["DOB"].split('/')[0])
